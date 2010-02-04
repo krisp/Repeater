@@ -1,8 +1,0 @@
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\obj\Debug\Repeater.Properties.Resources.resources
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\obj\Debug\Repeater.csproj.GenerateResource.Cache
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\bin\Debug\Repeater.exe
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\bin\Debug\Repeater.pdb
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\obj\Debug\Repeater.exe
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\obj\Debug\Repeater.pdb
-C:\Users\Dave\Documents\Visual Studio 2008\Projects\Repeater\Repeater\obj\Debug\Repeater.RepeaterForm.resources
