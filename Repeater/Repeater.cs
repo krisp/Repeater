@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO.Ports;
 using System.Collections;
-using System.Windows.Forms;
 
 namespace Repeater
 {
@@ -19,10 +18,22 @@ namespace Repeater
         public Repeater()
         {                        
             notifyIcon = new NotifyIcon(this);
-            repeaters = new ArrayList();            
-        }
+            repeaters = new ArrayList();
 
-        public bool AddSerialPairing(String source, String destination)
+            ArrayList ar = Properties.Settings.Default.Repeaters;
+            if (ar != null)
+            {
+                foreach (String pair in ar)
+                {
+                    String src = pair.Substring(0, pair.IndexOf(' '));
+                    String dst = pair.Substring(pair.IndexOf('>') + 2, pair.Length - (pair.IndexOf('>') + 2));
+
+                    AddSerialPairing(src, dst, Properties.Settings.Default.baudRate);
+                }
+            }
+        }
+        
+        public bool AddSerialPairing(String source, String destination, int BaudRate)
         {
             SerialRepeater src = null;
             SerialRepeater dst = null;
@@ -39,7 +50,7 @@ namespace Repeater
             {
                 if (src == null)
                 {
-                    src = new SerialRepeater(new SerialPort(source));
+                    src = new SerialRepeater(new SerialPort(source, BaudRate));
                     repeaters.Add(src);
                 }
             }
@@ -54,7 +65,7 @@ namespace Repeater
             {
                 if (dst == null)
                 {
-                    dst = new SerialRepeater(new SerialPort(destination));
+                    dst = new SerialRepeater(new SerialPort(destination, BaudRate));
                     repeaters.Add(dst);
                 }
             }
@@ -107,13 +118,13 @@ namespace Repeater
         }        
 
         public void EndProgram()
-        {
+        {            
             foreach (SerialRepeater sr in repeaters)
             {
                 sr.Close();
             }
             repeaters = null;
-            Application.Exit();
+            notifyIcon.EndProgram();
         }
     }
 }

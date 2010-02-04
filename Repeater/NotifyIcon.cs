@@ -29,6 +29,7 @@ namespace Repeater
             this.notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
             this.notifyIcon.Text = "Serial Repeater";
             this.notifyIcon.Visible = true;
+            this.notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
             
             this.contextMenuNotifyIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
                 this.configureToolStripMenuItem,
@@ -50,6 +51,11 @@ namespace Repeater
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
         }
 
+        void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            parent.RepeaterForm.Show();
+        }
+
         private void configureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             parent.RepeaterForm.Show();
@@ -59,6 +65,11 @@ namespace Repeater
         {
             notifyIcon.Visible = false;
             parent.EndProgram();
+        }
+
+        public void EndProgram()
+        {
+            Application.Exit();
         }
     }
 }

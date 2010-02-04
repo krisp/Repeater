@@ -17,6 +17,8 @@ namespace Repeater
             get { return port.PortName; }
         }
 
+        public ArrayList Listeners { get { return listeners; } }
+
         public SerialRepeater(SerialPort Serial_Port)
         {
             this.port = Serial_Port;
@@ -64,11 +66,13 @@ namespace Repeater
 
         void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            String data = this.port.ReadExisting();
-            foreach (SerialRepeater sr in listeners)
-            {
-                sr.Write(data);
-            }
+            byte[] data = new byte[port.BytesToRead];
+
+            for (int i = 0; i < port.BytesToRead; i++)
+                data[i] = (byte)port.ReadByte();
+
+            foreach (SerialRepeater sr in listeners)            
+                sr.Write(data, 0, data.Length);            
         }
 
         public void Close()
