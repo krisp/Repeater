@@ -22,7 +22,7 @@ namespace Repeater
         public SerialRepeater(SerialPort Serial_Port)
         {
             this.port = Serial_Port;
-            this.listeners = new ArrayList();
+            this.listeners = new ArrayList();            
             this.port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
             this.port.Open();
         }
@@ -67,12 +67,10 @@ namespace Repeater
         void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte[] data = new byte[port.BytesToRead];
-
-            for (int i = 0; i < port.BytesToRead; i++)
-                data[i] = (byte)port.ReadByte();
-
+            port.Read(data, 0, port.BytesToRead);          
+  
             foreach (SerialRepeater sr in listeners)            
-                sr.Write(data, 0, data.Length);            
+                sr.Write(data, 0, data.Length);                                    
         }
 
         public void Close()
