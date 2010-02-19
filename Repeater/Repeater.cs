@@ -13,7 +13,7 @@ namespace Repeater
         private NotifyIcon notifyIcon;
 
         public RepeaterForm RepeaterForm { get { return new RepeaterForm(this); } }
-        public ArrayList RepeaterList { get { return repeaters; } }
+        public ArrayList RepeaterList { get { return repeaters; } }     
 
         public Repeater()
         {                        

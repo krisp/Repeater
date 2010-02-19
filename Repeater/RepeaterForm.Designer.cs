@@ -39,6 +39,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,11 +139,20 @@
             this.comboBox3.Size = new System.Drawing.Size(105, 21);
             this.comboBox3.TabIndex = 7;
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(190, 143);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 13);
+            this.lblStatus.TabIndex = 8;
+            // 
             // RepeaterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(424, 165);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -175,6 +185,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 
