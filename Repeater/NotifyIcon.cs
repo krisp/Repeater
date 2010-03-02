@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Reflection;
+using System.IO;
 
 namespace Repeater
 {
     public class NotifyIcon
     {
+        Assembly _assembly;
+        Stream _imageStream;      
+        
         private Repeater parent;
 
         private System.Windows.Forms.NotifyIcon notifyIcon;
@@ -24,9 +28,11 @@ namespace Repeater
             this.contextMenuNotifyIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            
+
+            this._assembly = Assembly.GetExecutingAssembly();
+            this._imageStream = _assembly.GetManifestResourceStream("Repeater.icon.ico");
             this.notifyIcon.ContextMenuStrip = this.contextMenuNotifyIcon;
-            this.notifyIcon.Icon = new System.Drawing.Icon("icon.ico");
+            this.notifyIcon.Icon = new System.Drawing.Icon(this._imageStream);
             this.notifyIcon.Text = "Serial Repeater";
             this.notifyIcon.Visible = true;
             this.notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
