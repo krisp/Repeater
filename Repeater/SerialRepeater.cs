@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO.Ports;
 using System.Collections;
+using System.Threading;
 
 namespace Repeater
 {
@@ -10,6 +11,8 @@ namespace Repeater
     {
         private SerialPort port;
         private ArrayList listeners;
+        private Thread readThread;
+        private bool threadStop = false;
 
         public String PortName
         {
@@ -20,10 +23,35 @@ namespace Repeater
 
         public SerialRepeater(SerialPort Serial_Port)
         {
-            this.port = Serial_Port;
-            this.listeners = new ArrayList();            
-            this.port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
-            this.port.Open();
+            try
+            {
+                this.port = Serial_Port;
+                this.listeners = new ArrayList();                          
+                this.port.Open();
+
+                readThread = new Thread(new ThreadStart(ReadThread));
+                readThread.Start();
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Unable to open serial port " + this.port.PortName + ": " + e.Message);
+            }
+        }
+
+        public void ReadThread()
+        {
+            while (!threadStop)
+            {
+                try
+                {
+                    byte b = (byte)port.ReadByte();
+                    byte[] c = new byte[1];
+                    c[0] = b;
+                    foreach(SerialRepeater sr in listeners)
+                        sr.Write(c, 0, 1);
+                }
+                catch { }
+            }
         }
 
         public void AddListener(SerialRepeater ChildSR)
@@ -63,20 +91,17 @@ namespace Repeater
             lock (port) port.Write(data);
         }
 
-        void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            byte[] data = new byte[port.BytesToRead];
-            port.Read(data, 0, port.BytesToRead);          
-  
-            foreach (SerialRepeater sr in listeners)            
-                sr.Write(data, 0, data.Length);                                    
-        }
-
         public void Close()
-        {            
-            listeners = new ArrayList();
-            port.Close();
-            listeners = null;
+        {
+            try
+            {
+                threadStop = true;
+                readThread = null;
+                listeners = new ArrayList();
+                port.Close();
+                listeners = null;
+            }
+            catch { }
         }
     }
 }

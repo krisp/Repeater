@@ -117,13 +117,17 @@ namespace Repeater
         }        
 
         public void EndProgram()
-        {            
-            foreach (SerialRepeater sr in repeaters)
+        {
+            try
             {
-                sr.Close();
+                foreach (SerialRepeater sr in repeaters)
+                {
+                    sr.Close();
+                }
+                repeaters = null;
+                notifyIcon.EndProgram();
             }
-            repeaters = null;
-            notifyIcon.EndProgram();
+            catch { }
         }
     }
 }
